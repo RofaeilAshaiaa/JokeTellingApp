@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+
+        JokesProvider jokesProvider = new JokesProvider();
+        Toast.makeText(this, jokesProvider.getJoke() , Toast.LENGTH_SHORT).show();
     }
 
 
