@@ -2,10 +2,13 @@ package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.wang.avi.AVLoadingIndicatorView;
 
 import rofaeil.ashaiaa.idea.jokeviewlibrary.JokeTellingActivity;
 
@@ -43,11 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
+        final AVLoadingIndicatorView loadingIndicatorView =
+                (AVLoadingIndicatorView) findViewById(R.id.avi_loading_view);
+
+        loadingIndicatorView.show();
+
         EndpointsAsyncTask task = new EndpointsAsyncTask(){
             @Override
             protected void onPostExecute(String result) {
                 Intent intent = new Intent(MainActivity.this, JokeTellingActivity.class);
                 intent.putExtra(getString(R.string.joke_key),result );
+                loadingIndicatorView.hide();
                 startActivity(intent);
             }
         };
