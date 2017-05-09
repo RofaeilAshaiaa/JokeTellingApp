@@ -1,11 +1,16 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+
+import com.wang.avi.AVLoadingIndicatorView;
+
+import rofaeil.ashaiaa.idea.jokeviewlibrary.JokeTellingActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +45,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void tellJoke(View view) {
-        Toast.makeText(this, "derp", Toast.LENGTH_SHORT).show();
+
+        final AVLoadingIndicatorView loadingIndicatorView =
+                (AVLoadingIndicatorView) findViewById(R.id.avi_loading_view);
+
+        loadingIndicatorView.show();
+
+        EndpointsAsyncTask task = new EndpointsAsyncTask(){
+            @Override
+            protected void onPostExecute(String result) {
+                Intent intent = new Intent(MainActivity.this, JokeTellingActivity.class);
+                intent.putExtra(getString(R.string.joke_key),result );
+                loadingIndicatorView.hide();
+                startActivity(intent);
+            }
+        };
+        task.execute();
+
+//        Toast.makeText(this, jokesProvider.getJoke() , Toast.LENGTH_SHORT).show();
     }
 
 

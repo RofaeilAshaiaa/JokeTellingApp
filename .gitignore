@@ -30,3 +30,6 @@ proguard/
 
 # Android Studio captures folder
 captures/
+/JokeTellingApp.iml
+/JokesBackend/JokesBackend.iml
+/.idea/
