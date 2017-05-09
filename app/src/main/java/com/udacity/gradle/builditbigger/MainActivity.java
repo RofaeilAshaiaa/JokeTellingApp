@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import rofaeil.ashaiaa.idea.jokeviewlibrary.JokeTellingActivity;
 
@@ -44,10 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
 
-        JokesProvider jokesProvider = new JokesProvider();
-        Intent intent = new Intent(MainActivity.this, JokeTellingActivity.class);
-        intent.putExtra(getString(R.string.joke_key), jokesProvider.getJoke());
-        startActivity(intent);
+        EndpointsAsyncTask task = new EndpointsAsyncTask(){
+            @Override
+            protected void onPostExecute(String result) {
+                Intent intent = new Intent(MainActivity.this, JokeTellingActivity.class);
+                intent.putExtra(getString(R.string.joke_key),result );
+                startActivity(intent);
+            }
+        };
+        task.execute();
+
 //        Toast.makeText(this, jokesProvider.getJoke() , Toast.LENGTH_SHORT).show();
     }
 
